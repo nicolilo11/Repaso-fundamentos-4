@@ -41,9 +41,49 @@ export class Punto
         return distanciaAlOrigen
     }
 
-    calcularDistancia(p:Punto):number
+    calcularDistancia(otroPunto:Punto):number
     {
-        let calcularDistancia:number = parseFloat((Math.hypot((this.getX() - p.getX(),this.getY() - p.getY())).toFixed(3)));       
+        let calcularDistancia:number = parseFloat((Math.hypot((this.getX() - otroPunto.getX(),this.getY() - 
+                                                 otroPunto.getY())).toFixed(3)));       
         return calcularDistancia
+    }
+
+    calcularCuadrante():number
+    {
+        let cuadrante:number = 0;
+
+        if(this.getX() > 0 && this.getY() > 0)
+        {
+            cuadrante = 1;
+        }
+        else if(this.getX() < 0 && this.getY() > 0)
+        {
+            cuadrante = 2;
+        }
+        else if(this.getX() > 0 && this.getY() < 0)
+        {
+            cuadrante = 3;
+        }
+        else if(this.getX() < 0 && this.getY() < 0)
+        {
+            cuadrante = 4;
+        }
+    return cuadrante
+    }
+
+    calcularMasCercano(puntos:Punto[]):Punto
+    {
+        let puntoReferencia:number = 0;
+        let distancia:number = this.calcularDistancia(puntos[0]);
+
+        for(let i = 0; i < puntos.length; i++)
+        {
+            if(this.calcularDistancia(puntos[i]) < distancia)
+            { 
+                distancia = this.calcularDistancia(puntos[i]);
+                puntoReferencia = i
+            }
+        }
+        return puntos[puntoReferencia];
     }
 }
